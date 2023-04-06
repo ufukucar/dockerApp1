@@ -1,0 +1,1 @@
+Docker ortamında, nginx, laravel, redis, mysql kurulumu
