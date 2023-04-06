@@ -3,3 +3,5 @@ docker/mysql
 /.idea
 /idea
 .env
+
+**/docker/mysql/**
