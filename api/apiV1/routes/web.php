@@ -14,8 +14,5 @@ use \Illuminate\Support\Facades\Cache;
 */
 
 Route::get('/', function () {
-
-
-
-    return view('welcome');
+    abort(404);
 });

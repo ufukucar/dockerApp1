@@ -44,8 +44,8 @@ RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer
 
 # Install xdebug
-RUN pecl install xdebug \
-    && docker-php-ext-enable xdebug
+# RUN pecl install xdebug \
+#     && docker-php-ext-enable xdebug
 
 
 # Install imagick
