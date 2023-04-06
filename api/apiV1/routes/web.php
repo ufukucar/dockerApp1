@@ -15,14 +15,7 @@ use \Illuminate\Support\Facades\Cache;
 
 Route::get('/', function () {
 
-    if ( Cache::has('ufuk') )  {
-        echo "<br>Cache var: ". Cache::get('ufuk');
-    }else {
-        echo "<br> Cache yok, atama yapıldı. <br>";
-        Cache::put('ufuk', 'ucar', 120);
-    }
 
-    echo "<br>Bitti<br>";
 
-    return view('test');
+    return view('welcome');
 });
