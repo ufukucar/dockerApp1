@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Front\Customers;
+namespace App\Http\Controllers\Back\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Customer;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class CustomerController extends Controller
+class AdminController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return "Customer index man";
+        return "Admin index man";
     }
 
     /**
@@ -27,7 +28,7 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Customer $customer)
+    public function show(User $customer)
     {
         //
     }
@@ -35,7 +36,7 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Customer $customer)
+    public function update(Request $request, User $customer)
     {
         //
     }
@@ -43,7 +44,7 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Customer $customer)
+    public function destroy(User $customer)
     {
         //
     }

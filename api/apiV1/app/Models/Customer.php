@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
-{
-    use HasFactory;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
+class Customer extends Authenticatable
+{
+    use Notifiable, HasApiTokens, HasFactory;
     protected $table = "customers";
 
     protected $fillable = [
@@ -21,6 +24,11 @@ class Customer extends Model
         'since',
         'revenue'
     ];
+
+    protected $hidden = [
+        'password',
+    ];
+
 
     public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
