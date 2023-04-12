@@ -3,4 +3,4 @@
 /idea
 .env
 
-**/docker/mysql/
+**/docker/mysql5_7/
