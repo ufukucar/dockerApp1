@@ -17,8 +17,8 @@ class Category extends Model
         'slug',
     ];
 
-    public function products(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function products()
     {
-        return $this->belongsTo(Category::class);
+        return $this->hasMany(Category::class, 'categoryId', 'id');
     }
 }

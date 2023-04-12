@@ -13,14 +13,14 @@ class Product extends Model
     protected $fillable = [
         'categoryId',
         'name',
-        'price',
+        'unitPrice',
         'stock'
     ];
 
 
-    public function category(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'categoryId', 'id');
     }
 
 

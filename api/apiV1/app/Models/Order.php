@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\OrderStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,18 +12,29 @@ class Order extends Model
 
     protected $table = "orders";
     protected $fillable = [
-       'customerId',
+        'customerId',
         'productId',
+        'order_number',
         'quantity',
         'unitPrice',
         'total',
-        'date'
+        'date',
+        'status',
 
     ];
 
-    public function customer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    protected $casts = [
+        'status' => OrderStatusEnum::class,
+    ];
+
+    public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function ordered_items()
+    {
+        return $this->hasMany(OrderedItem::class, 'orderId', 'id');
     }
 
 }

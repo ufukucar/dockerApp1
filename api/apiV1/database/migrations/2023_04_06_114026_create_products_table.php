@@ -17,10 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('categoryId')->nullable();
 
             $table->string('name');
-            $table->decimal('price', 8, 2);
+            $table->string('unitPrice');
             $table->integer('stock');
-
-
             $table->timestamps();
 
             $table->foreign('categoryId')->on('categories')->references('id')->onDelete('set null')->onUpdate('cascade');

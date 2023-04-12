@@ -30,7 +30,7 @@ class Customer extends Authenticatable
     ];
 
 
-    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function orders()
     {
         return $this->hasMany(Order::class);
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front\Customers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Back\Customers\CustomerResource;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,11 +20,18 @@ class CustomerAutController extends Controller
 
         if ( $customer && Hash::check($credentials['password'], $customer->password) ) {
 
-            $token = $customer->createToken('CUSTOMER TOKEN')->plainTextToken;
-            return response()->json(['token' => $token]);
+            $token = $customer->createToken("CUSTOMER TOKEN - $customer->email ")->plainTextToken;
+            return response()->json([
+                'success' => true,
+                'token' => $token,
+                'user' => CustomerResource::make($customer),
+            ]);
 
         }
-        return response()->json(['error' => 'Böyle bir kullanıcı bulunmuyor!'], 401);
+        return response()->json([
+            'success' => false,
+            'message' => 'Böyle bir kullanıcı bulunmuyor!'
+        ], 401);
 
 
     }

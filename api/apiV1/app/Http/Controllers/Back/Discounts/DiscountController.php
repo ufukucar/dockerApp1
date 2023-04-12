@@ -2,49 +2,53 @@
 
 namespace App\Http\Controllers\Back\Discounts;
 
+use App\Classes\Abstracts\DiscountAbstract;
+use App\Classes\Discounts\fromAbstract\Buy_5_Get_1;
+use App\Classes\Discounts\fromAbstract\En_ucuz_yuzde_yirmi;
+use App\Classes\Discounts\fromAbstract\TEN_PERCENT_OVER_1000;
 use App\Http\Controllers\Controller;
-use App\Models\Discount;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class DiscountController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    private $discountsArr = [];
+
+    public function calculateDiscount(Request $req)
     {
-        //
+        $orderNumber = htmlspecialchars(strip_tags(trim($req->orderNumber)));
+
+		if ( !$orderNumber ) return $this->apiErrorResponse('Böyle bir sipariş bulunmuyor!');
+
+		$order = Order::where('order_number', $orderNumber)->first();
+
+
+        $discountObj1 = new TEN_PERCENT_OVER_1000();
+        $discountObj2 = new Buy_5_Get_1();
+        $discountObj3 = new En_ucuz_yuzde_yirmi();
+
+        $discounts = $discountObj1->calculateDiscount($order);
+        $discounts2 = $discountObj2->calculateDiscount($order);
+        $discounts3 = $discountObj3->calculateDiscount($order);
+
+
+        $discountsArr = [$discounts,$discounts2,$discounts3 ];
+
+
+
+        return $this->apiResponse([
+            'orderId' => $order->id,
+            'discounts' => $discountsArr,
+            'totalDiscount' => '',
+            'discountedTotal' => ''
+        ]);
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Discount $discount)
-    {
-        //
-    }
+    private function getDiscounts ( DiscountAbstract $discount ) {
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Discount $discount)
-    {
-        //
-    }
+        $this->discounts[] = $discount;
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Discount $discount)
-    {
-        //
     }
 }

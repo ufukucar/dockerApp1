@@ -20,7 +20,7 @@ class ProductFactory extends Factory
         return [
             'categoryId' => random_int(1,10),
             'name' => fake()->words(5),
-            'price' => fake()->randomFloat(2),
+            'unitPrice' => fake()->randomFloat(2),
             'stock' => random_int(1,200),
 
         ];

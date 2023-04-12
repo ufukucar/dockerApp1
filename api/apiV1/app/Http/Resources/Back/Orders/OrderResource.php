@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Front\Orders;
+namespace App\Http\Resources\Back\Orders;
 
 use App\Models\OrderedItem;
 use Illuminate\Http\Request;
@@ -18,17 +18,15 @@ class OrderResource extends JsonResource
         $items = OrderedItem::where('orderId', $this->id)->get(['productId', 'quantity', 'unitPrice', 'total']);
 
         return [
-            'productId' => $this->id,
+            'id' => $this->id,
             'customerId' => $this->customerId,
+            'orderNumber' => $this->order_number,
             'items' => $items,
             'total' => $this->total,
+            //'status' => $this->status->toString($this->status),
             'status' => $this->status->name,
         ];
     }
 
-    public function with($request){
-        return [
-            'Sonuc'=> 'Veriler başarıyla getirildi',
-        ];
-    }
+
 }

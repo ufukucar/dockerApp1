@@ -2,17 +2,18 @@
 
 /** 1 ID'li kategoriden iki veya daha fazla ürün satın alındığında, en ucuz ürüne %20 indirim yapılır. */
 
-namespace App\Classes\Discounts\fromAbstract;
-use App\Classes\Abstracts\DiscountAbstract;
+namespace App\Classes\Discounts\fromInterface;
 
-class En_ucuz_yuzde_yirmi extends DiscountAbstract
+use App\Classes\Interfaces\IDiscountStrategies;
+
+class En_ucuz_yuzde_yirmi implements  IDiscountStrategies
 {
 
     private $categoryId = 1;
     private $discounts = [];
     private $cheapest = [];
 
-    function calculateDiscount($order)
+    function calculateDiscount($order, $total)
     {
 
         foreach ($order->ordered_items as $item) {
@@ -28,17 +29,28 @@ class En_ucuz_yuzde_yirmi extends DiscountAbstract
             }
         }
 
-
         /** Küçükten büyüğe doğru sıralama */
         $arr = collect($this->cheapest);
         $orderedArr = $arr->sortBy('total')->values()->all();
 
+        // En küçüğüne %20 uygula
+        $discountAmount = number_format( $orderedArr[0]["total"] * 0.2, 2);
+        $orderedArr[0]["total"] -=  number_format( $orderedArr[0]["total"] * 0.2, 2);
 
-        $this->discounts[] = [
+        $subtotal = 0;
+        foreach ($orderedArr as $item ) {
+            $subtotal += $item["total"];
+        }
+
+        $this->discounts []= [
             'discountReason' => "20_PERCENT_CHEAPEST_ONE",
-            'discountAmount' => number_format((float) $orderedArr[0]["total"] * 0.2, 2),
-            'subtotal' => number_format((float) $orderedArr[0]["total"] * 0.8, 2)
+            'discountAmount' => $discountAmount,
+            //'subtotal' => $subtotal + $total,
+            'subtotal' => number_format((float) $subtotal + (float) $total, 2, ',', '')
+
+
         ];
+
 
         return $this->discounts;
 

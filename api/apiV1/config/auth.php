@@ -50,6 +50,16 @@ return [
             'driver' => 'sanctum',
             'provider' => 'admins',
         ],
+
+        'order-api' => [
+            'driver' => 'sanctum',
+            'provider' => 'orders',
+        ],
+
+        'product-api' => [
+            'driver' => 'sanctum',
+            'provider' => 'products',
+        ],
     ],
 
     /*
@@ -83,6 +93,16 @@ return [
         'customers' => [
             'driver' => 'eloquent',
             'model' => App\Models\Customer::class,
+        ],
+
+        'orders' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Order::class,
+        ],
+
+        'products' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Product::class,
         ],
 
         // 'users' => [

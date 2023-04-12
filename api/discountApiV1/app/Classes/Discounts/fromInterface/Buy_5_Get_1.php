@@ -1,22 +1,19 @@
 <?php
 
-namespace App\Classes\Discounts\fromAbstract;
+namespace App\Classes\Discounts\fromInterface;
 
-use App\Classes\Abstracts\DiscountAbstract;
+use App\Classes\Interfaces\IDiscountStrategies;
 
-class Buy_5_Get_1 extends DiscountAbstract
+class Buy_5_Get_1 implements IDiscountStrategies
 {
 
     private $categoryId = 2;
     private $discounts = [];
 
-    public function calculateDiscount($order)
+    public function calculateDiscount($orders, $total)
     {
-        //return $order->ordered_items[0]->product['categoryId'];
 
-
-
-        foreach ($order->ordered_items as $item ) {
+        foreach ($orders->ordered_items as $item ) {
 
             if ( $item->product['categoryId'] == $this->categoryId ) {
 
@@ -24,16 +21,19 @@ class Buy_5_Get_1 extends DiscountAbstract
 
                 $newQuantity = $item->quantity - $minusValue;
 
+                $subtotal = number_format(  $newQuantity * $item->unitPrice, 2, ',', '');
+                $discountAmount = number_format((float) ($minusValue * $item->unitPrice), 2);
+
                 $this->discounts[] = [
                     'discountReason' => "BUY_5_GET_1",
-                    'discountAmount' => $minusValue * $item->unitPrice,
-                    'subtotal' => number_format((float) $newQuantity * $item->unitPrice, 2)
+                    'discountAmount' =>$discountAmount,
+                    'subtotal' => $subtotal,
                 ];
 
             }
         }
 
-        return $this->discounts;
+        return  $this->discounts;
 
     }
 

@@ -2,7 +2,7 @@
 
 namespace App\Classes\Interfaces;
 
-interface IDiscountOrder
+interface IDiscountStrategies
 {
-    public function calculateDiscount(string $order): array;
+    public function calculateDiscount(string $order, float $total);
 }

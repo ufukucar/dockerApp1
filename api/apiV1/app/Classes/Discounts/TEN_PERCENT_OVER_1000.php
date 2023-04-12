@@ -1,8 +1,25 @@
 <?php
 
-namespace app\Classes\Discounts;
+namespace App\Classes\Discounts;
 
-class TEN_PERCENT_OVER_1000
+use App\Classes\Abstracts\DiscountAbstract;
+
+class TEN_PERCENT_OVER_1000 extends DiscountAbstract
 {
 
+ /*  public function __construct($order)
+   {
+       parent::__construct($order);
+   }*/
+
+    function calculateDiscount($order)
+    {
+        if ( $order->total >= 1000 ) {
+            return [
+                'discountReason' => "10_PERCENT_OVER_1000",
+                'discountAmount' =>  number_format((float) ($order->total * 0.1), 2),
+                'subtotal' => $order->total - ($order->total * 0.1),
+            ];
+        }
+    }
 }

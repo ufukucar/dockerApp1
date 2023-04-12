@@ -1,4 +1,4 @@
-FROM php:8.1.0-fpm
+FROM php:8.2.0-fpm
 
 RUN apt-get update && apt-get install -y \
     autoconf \
@@ -35,8 +35,8 @@ RUN apt-get update && apt-get install -y \
 #   && docker-php-ext-enable redis
 
 # Install mongodb
-RUN pecl install mongodb-1.11.0 \
-    && docker-php-ext-enable mongodb
+#RUN pecl install mongodb-1.11.0 \
+ #   && docker-php-ext-enable mongodb
 
 
 # Install composer
